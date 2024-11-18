@@ -10,6 +10,18 @@ const CoinContextProvider = (props) => {
         symbol: "$",
     });
 
+    const fecthAllCoin = async () => {
+        const options = {
+            method: 'GET',
+            headers: {accept: 'application/json', 'x-cg-demo-api-key': 'CG-fmdCab9QzQ22woQp4TJUBURC'}
+        };
+        
+        fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd', options)
+            .then(res => res.json())
+            .then(res => setAllCoin(res))
+            .catch(err => console.error(err));
+    }
+
     const contextValue = {
 
     };
