@@ -6,6 +6,19 @@ const Home = () => {
 
     const {allCoin, currency} = useContext(CoinContext);
     const [displayCoin, setDisplayCoin] = useState([]);
+    const [input, setInput] = useState('');
+
+    const inputHandler = (event) => {
+        setInput(event.target.value);
+    }
+
+    const searchHandler = async (event) => {
+        event.preventDefault();
+        const coins = await allCoin.filter((item) => {
+            return item.name.toLowerCase().includes(input.toLowerCase())
+        })
+        setDisplayCoin(coins);
+    }
 
     useEffect(() => {
         setDisplayCoin(allCoin);
@@ -16,8 +29,8 @@ const Home = () => {
             <div className="hero">
                 <h1>Largest <br/> Crypto Marketplace</h1>
                 <p>Welcome to the world's largest cryptocurrency marketplace. Sign up to explore more about cryptos.</p>
-                <form>
-                    <input type="text" placeholder='Search crypto...'/>
+                <form onSubmit={searchHandler}>
+                    <input onChange={inputHandler} value={input} type="text" placeholder='Search crypto...' required/>
                     <button type='submit'>Search</button>
                 </form>
             </div>
